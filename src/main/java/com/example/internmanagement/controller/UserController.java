@@ -33,8 +33,6 @@ public class UserController {
 
     @GetMapping("/users/new")
     public String createUserForm(Model model) {
-
-        // create user object to hold user form data
         User user = new User();
         model.addAttribute("user", user);
         return "create_user";
@@ -57,20 +55,14 @@ public class UserController {
     public String updateUser(@PathVariable Long id,
                                 @ModelAttribute("user") User user,
                                 Model model) {
-
-        // get user from database by id
         User existingUser = userService.getUserById(id);
         existingUser.setId(id);
         existingUser.setFirstName(user.getFirstName());
         existingUser.setLastName(user.getLastName());
         existingUser.setEmail(user.getEmail());
-
-        // save updated user object
         userService.updateUser(existingUser);
         return "redirect:/users";
     }
-
-    // handler method to handle delete user request
 
     @GetMapping("/users/{id}")
     public String deleteUser(@PathVariable Long id) {

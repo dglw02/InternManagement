@@ -1,4 +1,4 @@
-package com.example.internmanagement.web;
+package com.example.internmanagement.controller;
 
 import com.example.internmanagement.service.UserService;
 import com.example.internmanagement.web.dto.UserRegistrationDto;
