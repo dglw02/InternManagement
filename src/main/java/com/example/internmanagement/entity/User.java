@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name="USER")
 public class User {
     private static final long serialVersionUID = 1L;
     @Id
