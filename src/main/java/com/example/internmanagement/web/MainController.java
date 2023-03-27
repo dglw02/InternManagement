@@ -14,4 +14,9 @@ public class MainController {
     public String home() {
         return "index";
     }
+
+    @GetMapping("/user")
+    public  String user(){
+        return "users";
+    }
 }

@@ -12,17 +12,13 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="GROUP")
-public class Group {
+@Table(name="tbl_class")
+public class Class {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
     private String name;
-
-    @ManyToOne
-    @JoinColumn(name="department_id", referencedColumnName = "id")
-    private Department department;
 
 }

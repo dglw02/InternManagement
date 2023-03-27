@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="DEPARTMENT")
+@Table(name="tbl_department")
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,5 @@ public class Department {
     @Column
     private String year;
 
-    @OneToMany(mappedBy="department")
-    private Set<Group> groups;
+
     }
