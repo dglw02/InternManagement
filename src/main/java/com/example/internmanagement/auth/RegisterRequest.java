@@ -1,4 +1,4 @@
-package com.example.internmanagement.web.dto;
+package com.example.internmanagement.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import javax.persistence.Column;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRegistrationDto {
+public class RegisterRequest {
     @Column
     private String firstName;
     @Column
