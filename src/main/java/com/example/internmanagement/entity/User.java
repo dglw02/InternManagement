@@ -41,7 +41,6 @@ public class User implements UserDetails {
 //    @Size(min = 6, message = "Mat khau tu 6 ki tu tro len")
     private String password;
 
-    private String photo;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
