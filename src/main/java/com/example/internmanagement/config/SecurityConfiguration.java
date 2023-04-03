@@ -31,6 +31,8 @@ public class SecurityConfiguration {
                 .permitAll()
                 .antMatchers("/user/**")
                 .permitAll()
+                .antMatchers("/image/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
