@@ -32,6 +32,8 @@ public class User implements UserDetails {
     @Column
     private String password;
 
+    @Column
+    private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
