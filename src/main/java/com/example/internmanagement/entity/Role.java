@@ -36,6 +36,7 @@ public class Role {
     }
 
 
+
 //    public Role() {
 //
 //    }
@@ -58,5 +59,6 @@ public class Role {
 //    public void setName(String name) {
 //        this.name = name;
 //    }
+
 
 }
