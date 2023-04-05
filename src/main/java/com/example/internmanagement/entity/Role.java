@@ -1,5 +1,6 @@
 package com.example.internmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,32 +20,10 @@ public class Role {
     @Column
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
-
-    @ManyToMany
-    @JoinTable(
-            name = "roles_privileges",
-            joinColumns = @JoinColumn(
-                    name = "role_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(
-                    name = "privilege_id", referencedColumnName = "id"))
-
-    private List<Privilege> privileges;
-
     public Role(String name) {
+        super();
+        this.name = name;
     }
-
-
-
-//    public Role() {
-//
-//    }
-//
-//    public Role(String name) {
-//        super();
-//        this.name = name;
-//    }
 
 
 //    public Long getId() {
