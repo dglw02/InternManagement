@@ -1,5 +1,8 @@
-package com.example.internmanagement.auth;
+package com.example.internmanagement.service;
 
+import com.example.internmanagement.auth.AuthenticationRequest;
+import com.example.internmanagement.auth.AuthenticationResponse;
+import com.example.internmanagement.auth.RegisterRequest;
 import com.example.internmanagement.entity.Role;
 import com.example.internmanagement.entity.User;
 import com.example.internmanagement.repository.UserRepository;
