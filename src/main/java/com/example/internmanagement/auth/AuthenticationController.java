@@ -1,9 +1,9 @@
-package com.example.internmanagement.controller;
+package com.example.internmanagement.auth;
 
 import com.example.internmanagement.auth.AuthenticationRequest;
 import com.example.internmanagement.auth.AuthenticationResponse;
 import com.example.internmanagement.auth.RegisterRequest;
-import com.example.internmanagement.service.AuthenticationService;
+import com.example.internmanagement.auth.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

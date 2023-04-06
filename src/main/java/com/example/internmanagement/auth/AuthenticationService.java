@@ -1,4 +1,4 @@
-package com.example.internmanagement.service;
+package com.example.internmanagement.auth;
 
 import com.example.internmanagement.auth.AuthenticationRequest;
 import com.example.internmanagement.auth.AuthenticationResponse;
