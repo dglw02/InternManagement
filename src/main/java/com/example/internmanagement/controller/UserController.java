@@ -1,8 +1,10 @@
 package com.example.internmanagement.controller;
 
 
+import com.example.internmanagement.dto.UserDto;
 import com.example.internmanagement.entity.User;
 import com.example.internmanagement.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -23,30 +26,39 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> user = userService.getAllUser();
+    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> user = userService.getAllUser().stream().map(user1 -> modelMapper.map(user1, UserDto.class)).collect(Collectors.toList());
         return ResponseEntity.ok(user);
     }
 
-    @PostMapping
-    public ResponseEntity<User> saveUser(@Valid @RequestBody User user) {
-        User newUser = userService.saveUser(user);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getId())
-                .toUri();
-        return ResponseEntity.created(location).build();
+    @PostMapping()
+    public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
+
+        User userRequest = modelMapper.map(userDto, User.class);
+        User user = userService.saveUser(userRequest);
+
+        UserDto userResponse = modelMapper.map(user, UserDto.class);
+        return new ResponseEntity(userResponse, HttpStatus.CREATED);
     }
 
     @GetMapping("/find/id/{userId}")
-    public ResponseEntity<User> findUserById(@PathVariable("userId") Long id) {
+    public ResponseEntity<UserDto> findUserById(@PathVariable("userId") Long id) {
         User user = userService.findUserById(id);
-        return ResponseEntity.ok(user);
+        UserDto useResponse = modelMapper.map(user, UserDto.class);
+        return ResponseEntity.ok().body(useResponse);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> updateUserById(@RequestBody User user, @PathVariable("userId") Long id) {
-        User updated = userService.updateUserById(user, id);
-        return ResponseEntity.accepted().body(updated);
+    public ResponseEntity<UserDto> updateUserById(@RequestBody UserDto userDto, @PathVariable("userId") Long id) {
+
+        User userRequest = modelMapper.map(userDto, User.class);
+        User updated = userService.updateUserById(userRequest, id);
+        UserDto userResponse = modelMapper.map(updated, UserDto.class);
+        return ResponseEntity.accepted().body(userResponse);
     }
 
     @DeleteMapping("/{userId}")

@@ -2,6 +2,7 @@ package com.example.internmanagement.config;
 
 import com.example.internmanagement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,11 @@ public class ApplicationConfig {
     @Bean
     public UserDetailsService userDetailsService(){
         return username -> userRepository.findByEmail(username);
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     @Bean

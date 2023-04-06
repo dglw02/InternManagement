@@ -21,14 +21,15 @@ public class UserService {
 
     public User saveUser(User user) {
         Optional<User> checkIfUserWithIdExist = userRepository.findUserById(user.getId());
+        user.setEnabled(true);
         if (checkIfUserWithIdExist != null) {
-            throw new UsernameNotFoundException("Email already in use.");
+            throw new UsernameNotFoundException("Account already exit.");
         }
         return userRepository.save(user);
     }
 
     public List<User> getAllUser() {
-        List<User> users = (List<User>) userRepository.findAll();
+        List<User> users =  userRepository.findAll();
         if (users.isEmpty()) {
             throw new UsernameNotFoundException("User not found.");
         }

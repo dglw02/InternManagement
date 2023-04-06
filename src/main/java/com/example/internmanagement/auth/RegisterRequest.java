@@ -20,4 +20,6 @@ public class RegisterRequest {
     private String email;
     @Column
     private String password;
+    @Column
+    private boolean enabled;
 }
