@@ -33,6 +33,8 @@ public class SecurityConfiguration {
                 .permitAll()
                 .antMatchers("/image/**")
                 .permitAll()
+                .antMatchers("/project/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -88,7 +88,7 @@ public class User implements UserDetails {
     }
 
 
-    @OneToMany(mappedBy = "tbl_user")
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Project> projects;
 
