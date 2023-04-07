@@ -1,9 +1,11 @@
 package com.example.internmanagement.service;
 
+import com.example.internmanagement.entity.Project;
 import com.example.internmanagement.entity.User;
+import com.example.internmanagement.exception.ErrorException;
+import com.example.internmanagement.repository.ProjectRepository;
 import com.example.internmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -14,6 +16,8 @@ import java.util.*;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProjectRepository projectRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -23,7 +27,7 @@ public class UserService {
         Optional<User> checkIfUserWithIdExist = userRepository.findUserById(user.getId());
         user.setEnabled(true);
         if (checkIfUserWithIdExist != null) {
-            throw new UsernameNotFoundException("Account already exit.");
+            throw new ErrorException("Account already exit.");
         }
         return userRepository.save(user);
     }
@@ -31,14 +35,14 @@ public class UserService {
     public List<User> getAllUser() {
         List<User> users =  userRepository.findAll();
         if (users.isEmpty()) {
-            throw new UsernameNotFoundException("User not found.");
+            throw new ErrorException("User not found.");
         }
         return users;
     }
 
     public User findUserById(Long id) {
         return userRepository.findUserById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("user with id: " + id + " does not exist."));
+                .orElseThrow(() -> new ErrorException("user with id: " + id + " does not exist."));
     }
 
     @Transactional
@@ -48,7 +52,7 @@ public class UserService {
         Optional<User> userDB = userRepository.findUserById(id);
 
         if (userDB.isEmpty()) {
-            throw new UsernameNotFoundException("User with id: " + id + " does not exist.");
+            throw new ErrorException("User with id: " + id + " does not exist.");
         }
 
         if (StringUtils.isEmpty(user.getFirstName()) && !Objects.equals(user.getFirstName(), userDB.get().getFirstName())) {
@@ -76,13 +80,33 @@ public class UserService {
 
     public void deleteUserById(Long id) {
         if (id == 0) {
-            throw new UsernameNotFoundException("You need to provide ID of user to be deleted. ID can not be 0.");
+            throw new ErrorException("You need to provide ID of user to be deleted. ID can not be 0.");
         }
         Optional<User> checkIfStudentWithIdExist = userRepository.findById(id);
         if (checkIfStudentWithIdExist.isEmpty()) {
-            throw new UsernameNotFoundException(
+            throw new ErrorException(
                     "User can not be deleted because user with id: " + id + " does not exist.");
         }
         userRepository.deleteById(id);
+    }
+
+
+    public Project createProjectForStudent(Long id, Project project) {
+        Optional<User> user = userRepository.findUserById(id);
+        if (user.isEmpty()) {
+            throw new ErrorException("User with id: " + id + " does not exist.");
+        }
+        project.setUser(user.get());
+        Project savedProject = projectRepository.save(project);
+        return savedProject;
+    }
+
+
+    public List<Project> getProjectsByIdForStudentById(Long id) {
+        Optional<User> user = userRepository.findUserById(id);
+        if (user.isEmpty()) {
+            throw new ErrorException("User with id: " + id + " does not exist.");
+        }
+        return user.get().getProjects();
     }
 }

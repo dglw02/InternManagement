@@ -2,6 +2,7 @@ package com.example.internmanagement.controller;
 
 
 import com.example.internmanagement.dto.UserDto;
+import com.example.internmanagement.entity.Project;
 import com.example.internmanagement.entity.User;
 import com.example.internmanagement.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -66,5 +67,20 @@ public class UserController {
     public ResponseEntity<?> deleteUserById(@PathVariable("userId") Long id) {
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PostMapping("/{userId}/projects")
+    public ResponseEntity<List<Project>> createProjectForStudent(@PathVariable("studentId") Long id,
+                                                                 @Valid @RequestBody Project project) {
+        Project savedProject = userService.createProjectForStudent(id, project);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedProject.getId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/{userId}/projects")
+    public ResponseEntity<List<Project>> getProjectsByIdForStudentById(@PathVariable("userId") Long id) {
+        List<Project> projects = userService.getProjectsByIdForStudentById(id);
+        return ResponseEntity.ok(projects);
     }
 }
