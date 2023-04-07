@@ -46,32 +46,29 @@ public class UserService {
         User updateUser = new User();
 
         Optional<User> userDB = userRepository.findUserById(id);
+
         if (userDB.isEmpty()) {
             throw new UsernameNotFoundException("User with id: " + id + " does not exist.");
         }
-        if (StringUtils.isEmpty(user.getFirstName())
-                && !Objects.equals(user.getFirstName(), userDB.get().getFirstName())) {
+
+        if (StringUtils.isEmpty(user.getFirstName()) && !Objects.equals(user.getFirstName(), userDB.get().getFirstName())) {
             updateUser.setFirstName(user.getFirstName());
         } else {
             updateUser.setFirstName(userDB.get().getFirstName());
         }
-        if (StringUtils.isEmpty(user.getLastName())
-                && !Objects.equals(user.getLastName(), userDB.get().getLastName())) {
+
+        if (StringUtils.isEmpty(user.getLastName()) && !Objects.equals(user.getLastName(), userDB.get().getLastName())) {
             updateUser.setLastName(user.getLastName());
         } else {
             updateUser.setLastName(userDB.get().getLastName());
         }
-        if (StringUtils.isEmpty(user.getEmail())
-                && !Objects.equals(user.getEmail(), userDB.get().getEmail())) {
 
-            User checkIfStudentWithEmailExist = userRepository.findByEmail(user.getEmail());
-            if (checkIfStudentWithEmailExist != null) {
-                throw new UsernameNotFoundException("Email already in use.");
-            }
+        if (StringUtils.isEmpty(user.getEmail()) && !Objects.equals(user.getEmail(), userDB.get().getEmail())) {
             updateUser.setEmail(user.getEmail());
         } else {
             updateUser.setEmail(userDB.get().getEmail());
         }
+
         updateUser.setId(id);
         return userRepository.save(updateUser);
     }

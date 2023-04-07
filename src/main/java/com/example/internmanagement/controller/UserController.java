@@ -34,7 +34,7 @@ public class UserController {
         List<UserDto> user = userService.getAllUser().stream().map(user1 -> modelMapper.map(user1, UserDto.class)).collect(Collectors.toList());
         return ResponseEntity.ok(user);
     }
-
+    //saveUser ko dùng đến,dùng registerRequest
     @PostMapping()
     public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
 
@@ -52,6 +52,7 @@ public class UserController {
         return ResponseEntity.ok().body(useResponse);
     }
 
+//Có lỗi trong updateUser
     @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateUserById(@RequestBody UserDto userDto, @PathVariable("userId") Long id) {
 
