@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+
 import javax.transaction.Transactional;
 import java.util.*;
 
@@ -91,7 +92,7 @@ public class UserService {
     }
 
 
-    public Project createProjectForStudent(Long id, Project project) {
+    public Project createProjectForUser(Long id, Project project) {
         Optional<User> user = userRepository.findUserById(id);
         if (user.isEmpty()) {
             throw new ErrorException("User with id: " + id + " does not exist.");
@@ -102,7 +103,7 @@ public class UserService {
     }
 
 
-    public List<Project> getProjectsByIdForStudentById(Long id) {
+    public List<Project> getProjectsByIdForUserById(Long id) {
         Optional<User> user = userRepository.findUserById(id);
         if (user.isEmpty()) {
             throw new ErrorException("User with id: " + id + " does not exist.");

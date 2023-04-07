@@ -70,17 +70,17 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/projects")
-    public ResponseEntity<List<Project>> createProjectForStudent(@PathVariable("studentId") Long id,
+    public ResponseEntity<List<Project>> createProjectForUser(@PathVariable("studentId") Long id,
                                                                  @Valid @RequestBody Project project) {
-        Project savedProject = userService.createProjectForStudent(id, project);
+        Project savedProject = userService.createProjectForUser(id, project);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(savedProject.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/{userId}/projects")
-    public ResponseEntity<List<Project>> getProjectsByIdForStudentById(@PathVariable("userId") Long id) {
-        List<Project> projects = userService.getProjectsByIdForStudentById(id);
+    public ResponseEntity<List<Project>> getProjectsByIdForUserById(@PathVariable("userId") Long id) {
+        List<Project> projects = userService.getProjectsByIdForUserById(id);
         return ResponseEntity.ok(projects);
     }
 }

@@ -32,7 +32,7 @@ public class ProjectService {
         Optional<Project> checkIfProjecttWithIdExist = projectRepository.findById(id);
         if (checkIfProjecttWithIdExist.isEmpty()) {
             throw new ErrorException(
-                    "Student can not be deleted because project with id: " + id + " does not exist.");
+                    "User can not be deleted because project with id: " + id + " does not exist.");
         }
         projectRepository.deleteById(id);
     }
