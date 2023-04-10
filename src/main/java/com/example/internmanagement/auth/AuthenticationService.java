@@ -28,15 +28,18 @@ public class AuthenticationService {
 
     @Autowired
     private JwtService jwtService;
+
     @Autowired
     private AuthenticationManager authenticationManager;
+
+
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .roles(Arrays.asList(new Role("ADMIN")))
+                .role(Role.ADMIN)
                 .enabled(request.isEnabled())
                 .build();
         userRepository.save(user);

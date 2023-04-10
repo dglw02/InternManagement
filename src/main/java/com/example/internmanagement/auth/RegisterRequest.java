@@ -12,14 +12,9 @@ import javax.persistence.Column;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterRequest {
-    @Column
     private String firstName;
-    @Column
     private String lastName;
-    @Column
     private String email;
-    @Column
     private String password;
-    @Column
     private boolean enabled;
 }
