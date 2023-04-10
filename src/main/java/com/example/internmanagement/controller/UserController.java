@@ -1,6 +1,7 @@
 package com.example.internmanagement.controller;
 
 
+import com.example.internmanagement.dto.CreateUserDto;
 import com.example.internmanagement.dto.UserDto;
 import com.example.internmanagement.entity.User;
 import com.example.internmanagement.service.UserService;
@@ -8,13 +9,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,12 +34,10 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
-
-        User userRequest = modelMapper.map(userDto, User.class);
+    public ResponseEntity<CreateUserDto> saveUser(@RequestBody CreateUserDto createUserDto) {
+        User userRequest = modelMapper.map(createUserDto, User.class);
         User user = userService.saveUser(userRequest);
-
-        UserDto userResponse = modelMapper.map(user, UserDto.class);
+        CreateUserDto userResponse = modelMapper.map(user, CreateUserDto.class);
         return new ResponseEntity(userResponse, HttpStatus.CREATED);
     }
 

@@ -20,11 +20,6 @@ public class UserService {
     }
 
     public User saveUser(User user) {
-        Optional<User> checkIfUserWithIdExist = userRepository.findUserById(user.getId());
-        user.setEnabled(true);
-        if (checkIfUserWithIdExist != null) {
-            throw new UsernameNotFoundException("Account already exit.");
-        }
         return userRepository.save(user);
     }
 
@@ -41,39 +36,22 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("user with id: " + id + " does not exist."));
     }
 
-    @Transactional
     public User updateUserById(User user, Long id) {
-        User updateUser = new User();
-
-        Optional<User> userDB = userRepository.findUserById(id);
-        if (userDB.isEmpty()) {
-            throw new UsernameNotFoundException("User with id: " + id + " does not exist.");
+        Optional<User> userData = userRepository.findUserById(id);
+        if (userData.isPresent()){
+            User users = userData.get();
+            users.getId();
+            users.setFirstName(user.getFirstName());
+            users.setLastName(users.getLastName());
+            users.setEmail(user.getEmail());
+            users.setEnabled(user.isEnabled());
+            users.setRole(user.getRole());
+            users.getPassword();
+            return userRepository.save(users);
         }
-        if (StringUtils.isEmpty(user.getFirstName())
-                && !Objects.equals(user.getFirstName(), userDB.get().getFirstName())) {
-            updateUser.setFirstName(user.getFirstName());
-        } else {
-            updateUser.setFirstName(userDB.get().getFirstName());
+        else {
+            return null;
         }
-        if (StringUtils.isEmpty(user.getLastName())
-                && !Objects.equals(user.getLastName(), userDB.get().getLastName())) {
-            updateUser.setLastName(user.getLastName());
-        } else {
-            updateUser.setLastName(userDB.get().getLastName());
-        }
-        if (StringUtils.isEmpty(user.getEmail())
-                && !Objects.equals(user.getEmail(), userDB.get().getEmail())) {
-
-            User checkIfStudentWithEmailExist = userRepository.findByEmail(user.getEmail());
-            if (checkIfStudentWithEmailExist != null) {
-                throw new UsernameNotFoundException("Email already in use.");
-            }
-            updateUser.setEmail(user.getEmail());
-        } else {
-            updateUser.setEmail(userDB.get().getEmail());
-        }
-        updateUser.setId(id);
-        return userRepository.save(updateUser);
     }
 
 

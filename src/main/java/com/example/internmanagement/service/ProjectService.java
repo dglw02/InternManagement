@@ -29,8 +29,8 @@ public class ProjectService {
         if (id == 0) {
             throw new ErrorException("You need to provide ID of project to be deleted. ID can not be 0.");
         }
-        Optional<Project> checkIfProjecttWithIdExist = projectRepository.findById(id);
-        if (checkIfProjecttWithIdExist.isEmpty()) {
+        Optional<Project> checkIfProjectWithIdExist = projectRepository.findById(id);
+        if (checkIfProjectWithIdExist.isEmpty()) {
             throw new ErrorException(
                     "User can not be deleted because project with id: " + id + " does not exist.");
         }

@@ -77,15 +77,4 @@ public class User implements UserDetails {
     }
 
 
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Project> projects;
-
-    public List<Project> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<Project> projects) {
-        this.projects = projects;
-    }
 }
