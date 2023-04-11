@@ -31,9 +31,13 @@ public class ProjectService {
         }
         Optional<Project> checkIfProjectWithIdExist = projectRepository.findById(id);
         if (checkIfProjectWithIdExist.isEmpty()) {
-            throw new ErrorException(
-                    "User can not be deleted because project with id: " + id + " does not exist.");
+
+            Optional<Project> checkIfProjecttWithIdExist = projectRepository.findById(id);
+            if (checkIfProjecttWithIdExist.isEmpty()) {
+                throw new ErrorException(
+                        "User can not be deleted because project with id: " + id + " does not exist.");
+            }
+            projectRepository.deleteById(id);
         }
-        projectRepository.deleteById(id);
     }
 }
