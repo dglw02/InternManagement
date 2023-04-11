@@ -5,9 +5,6 @@ import com.example.internmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
