@@ -13,7 +13,10 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,13 +63,16 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUserById(@PathVariable("userId") Long id) {
+    public ResponseEntity<UserDto> deleteUserById(@PathVariable("userId") Long id) {
         userService.deleteUserById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+
+
     }
 
     @PostMapping("/{userId}/projects")
-    public ResponseEntity<List<Project>> createProjectForUser(@PathVariable("studentId") Long id,
+    public ResponseEntity<List<Project>> createProjectForUser(@PathVariable("userId") Long id,
                                                                  @Valid @RequestBody Project project) {
         Project savedProject = userService.createProjectForUser(id, project);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

@@ -36,7 +36,9 @@ public class User implements UserDetails {
     @Column
     private boolean enabled;
 
-
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Project> projects;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -75,6 +77,11 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
 
 
 

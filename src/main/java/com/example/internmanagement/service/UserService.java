@@ -1,6 +1,9 @@
 package com.example.internmanagement.service;
 
+import com.example.internmanagement.entity.Project;
 import com.example.internmanagement.entity.User;
+import com.example.internmanagement.exception.ErrorException;
+import com.example.internmanagement.repository.ProjectRepository;
 import com.example.internmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +14,8 @@ import java.util.*;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProjectRepository projectRepository;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -62,5 +67,23 @@ public class UserService {
                     "User can not be deleted because user with id: " + id + " does not exist.");
         }
         userRepository.deleteById(id);
+    }
+
+    public Project createProjectForUser(Long id, Project project) {
+        Optional<User> student = userRepository.findUserById(id);
+        if (student.isEmpty()) {
+            throw new ErrorException("Student with id: " + id + " does not exist.");
+        }
+        project.setUser(student.get());
+        Project savedProject = projectRepository.save(project);
+        return savedProject;
+    }
+
+    public List<Project> getProjectsByIdForUserById(Long id) {
+        Optional<User> user = userRepository.findUserById(id);
+        if (user.isEmpty()) {
+            throw new ErrorException("Student with id: " + id + " does not exist.");
+        }
+        return user.get().getProjects();
     }
 }
